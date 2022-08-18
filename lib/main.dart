@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-//import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
-//import 'widgets/ButtonScanner.dart';
 import 'package:path_provider/path_provider.dart';
 import 'dart:io';
 
@@ -71,7 +69,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     },
                     textInputAction: TextInputAction.next,
                     decoration: const InputDecoration(
-                        enabledBorder: InputBorder.none,
+                        enabledBorder: UnderlineInputBorder(),
                         counterText: "",
                         border: OutlineInputBorder(),
                         hintText: 'Inserte el nombre del artículo'),
@@ -88,77 +86,33 @@ class _MyHomePageState extends State<MyHomePage> {
                       onSubmitted: (text) {
                         String resultado = _controller.text = text;
                         if (resultado.isNotEmpty) {
-                          //lista.add(resultado);
-
                           save(resultado);
+                          final snackBar = SnackBar(
+                              content: Text('Usted ha pickeado: $resultado'),
+                              action: SnackBarAction(
+                                label: 'Cerrar',
+                                onPressed: () {
+                                  // Some code to undo the change.
+                                },
+                              ),
+                              duration: const Duration(milliseconds: 500));
+                          ScaffoldMessenger.of(context).showSnackBar(snackBar);
                         }
                       })),
-              /* ElevatedButton(
-                  child: const Text('Escanear con cámara'),
-                  onPressed: () async {
-                    _controller.text = '';
-                    barcodeScanRes = await FlutterBarcodeScanner.scanBarcode(
-                        '#3D8BEF', 'Cancelar', true, ScanMode.QR);
-                    if (barcodeScanRes != '-1') {
-                      _controller.text = barcodeScanRes;
-                      lista.add(barcodeScanRes);
-                    }
-                  }), */
-              ElevatedButton(
-                  child: const Text('Ver Log'),
-                  onPressed: () {
-                    showDialog(
-                        context: context,
-                        builder: (_) => AlertDialog(
-                              title: const Text("Usted ha pickeado:"),
-                              content: Text('getLog()'),
-                            ),
-                        barrierDismissible: true);
-                  }),
-              /* ElevatedButton(
-                  onPressed: () => {
-                        if (lista.isNotEmpty)
-                          {save('Picked.txt', lista)}
-                        else
-                          {
-                            showDialog(
-                                context: context,
-                                builder: (_) => const AlertDialog(
-                                      title: Text("Archivo TXT Vacío"),
-                                      content:
-                                          Text('Por favor, escanee productos.'),
-                                    ),
-                                barrierDismissible: true)
-                          }
-                      },
-                  child: const Text("Descargar TXT")) */
             ],
           ),
         ));
   }
 
-  /* _createTXT(List<String> lista) async {
-    String listaConcatenada = concatenar(lista);
-    final Directory directory = await getApplicationDocumentsDirectory();
-    final File file = File('${directory.path}/Picked.txt');
-    await file.writeAsString(listaConcatenada);
-    lista.clear();
-  } */
-
-  static Future<void> save(String content) async {
-    //String listaConcatenada = concatenar(content);
+  static Future<File> save(String content) async {
     final directory = (await getExternalStorageDirectory())?.path;
     final file = File('$directory/Log.txt');
-    final String texto = await file.readAsString();
-    await file.writeAsString(
+    String texto = '';
+    if (file.existsSync()) {
+      texto = await file.readAsString();
+    }
+    return file.writeAsString(
         '$texto \nCodigo de barra: $content - ${DateTime.now()}');
-  }
-
-  static Future<String> getLog() async {
-    final directory = (await getExternalStorageDirectory())?.path;
-    final file = File('$directory/Log.txt');
-    final String texto = await file.readAsString();
-    return texto;
   }
 }
 
