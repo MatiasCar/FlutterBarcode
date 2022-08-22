@@ -24,6 +24,6 @@ Widget firstInput(context, myFocusNode, controller, controllerPrimerInput) {
             enabledBorder: UnderlineInputBorder(),
             counterText: "",
             border: OutlineInputBorder(),
-            hintText: 'Inserte el nombre del artículo'),
+            hintText: 'Primer Input'),
       ));
 }
