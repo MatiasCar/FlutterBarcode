@@ -55,17 +55,20 @@ class _MyHomePageState extends State<MyHomePage> {
                   child: TextField(
                     controller: _controllerPrimerInput,
                     onChanged: (value) {
-                      if (value.characters.length == cantidad && value == '@') {
+                      if ((value.contains('@'))) {
                         FocusScope.of(context).requestFocus(myFocusNode);
-                        _controllerPrimerInput.text = '';
+                        _controller.text = value;
+                        _controllerPrimerInput.clear();
                       }
+                      if (resultado.isNotEmpty) {}
                     },
                     onSubmitted: (value) {
-                      String resultado = _controllerPrimerInput.text = value;
-                      if (resultado.isNotEmpty) {
-                        //lista.add(resultado);
-                        save(resultado);
+                      if ((value.contains('@'))) {
+                        FocusScope.of(context).requestFocus(myFocusNode);
+                        _controller.text = value;
+                        _controllerPrimerInput.clear();
                       }
+                      if (resultado.isNotEmpty) {}
                     },
                     textInputAction: TextInputAction.next,
                     decoration: const InputDecoration(
@@ -83,20 +86,38 @@ class _MyHomePageState extends State<MyHomePage> {
                           border: OutlineInputBorder(),
                           hintText: 'Productos a escanear'),
                       controller: _controller,
+                      // onChanged: (value) {
+                      //   print('valor:::::::::::::::::' + value);
+                      //   if ((value.contains('@')) && (value.contains('*'))) {
+                      //     save(value.replaceAll('@', '').replaceAll('*', ''));
+                      //     final snackBar = SnackBar(
+                      //         content: Text('Usted ha pickeado: $resultado'),
+                      //         action: SnackBarAction(
+                      //           label: 'Cerrar',
+                      //           onPressed: () {
+                      //             // Some code to undo the change.
+                      //           },
+                      //         ),
+                      //         duration: const Duration(milliseconds: 600));
+                      //     ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                      //   }
+                      // },
                       onSubmitted: (text) {
-                        String resultado = _controller.text = text;
-                        if (resultado.isNotEmpty) {
-                          save(resultado);
+                        String resultado =
+                            _controller.text = text.replaceFirst('@', '');
+                        text = text.replaceAll('@', '');
+                        if (text.isNotEmpty) {
+                          save(text);
                           final snackBar = SnackBar(
-                              content: Text('Usted ha pickeado: $resultado'),
+                              content: Text('Usted ha pickeado: $text'),
                               action: SnackBarAction(
                                 label: 'Cerrar',
                                 onPressed: () {
                                   // Some code to undo the change.
                                 },
                               ),
-                              duration: const Duration(milliseconds: 500));
-                          ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                              duration: const Duration(milliseconds: 2000));
+                          //ScaffoldMessenger.of(context).showSnackBar(snackBar);
                         }
                       })),
             ],
