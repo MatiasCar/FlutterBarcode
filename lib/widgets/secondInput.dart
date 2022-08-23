@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../models/api/apiPokemon.dart';
 
 Widget secondInput(context, myFocusNode, controller, save) {
   return Padding(
@@ -11,6 +12,7 @@ Widget secondInput(context, myFocusNode, controller, save) {
           controller: controller,
           onSubmitted: (text) {
             text = text.replaceAll('@', '');
+            apiPokemon(text);
             if (text.isNotEmpty) {
               save(text);
               final snackBar = SnackBar(

@@ -36,6 +36,7 @@ dependencies:
   cupertino_icons: ^1.0.2
   path_provider: ^2.0.11
   open_file: ^3.2.1
+  rest_api_client: ^2.1.2
 
 dev_dependencies:
   flutter_test:
