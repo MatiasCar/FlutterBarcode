@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import './widgets/mainColumn.dart';
+import 'mainColumn.dart';
 
 void main() {
   runApp(const MyApp());

@@ -15,7 +15,7 @@ Widget mainColumn(context) {
     children: <Widget>[
       firstInput(context, myFocusNode, controller, controllerPrimerInput),
       secondInput(context, myFocusNode, controller, save),
-      openButton(),
+      openButton()
     ],
   );
 }

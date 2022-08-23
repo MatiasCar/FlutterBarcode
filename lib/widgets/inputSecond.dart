@@ -8,7 +8,7 @@ Widget secondInput(context, myFocusNode, controller, save) {
           autofocus: true,
           focusNode: myFocusNode,
           decoration: const InputDecoration(
-              border: OutlineInputBorder(), hintText: 'Productos a escanear'),
+              border: OutlineInputBorder(), hintText: 'Segundo Input'),
           controller: controller,
           onSubmitted: (text) {
             text = text.replaceAll('@', '');
